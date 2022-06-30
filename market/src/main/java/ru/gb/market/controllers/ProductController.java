@@ -2,6 +2,7 @@ package ru.gb.market.controllers;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.market.DTO.ProductDto;
 import ru.gb.market.models.Product;
@@ -17,14 +18,13 @@ public class ProductController {
 
 
     @GetMapping("/products")
-    public List<ProductDto> findAll(@RequestParam(required = false)Integer min,
-                                    @RequestParam(required = false)Integer max) {
-        List<Product> products =productService.findWithParams(min,max);
-        List<ProductDto> productDto = new ArrayList<>();
-        for (Product p: products) {
-            productDto.add(new ProductDto(p));
+    public Page<ProductDto> findAll(@RequestParam(required = false) Integer min, @RequestParam(required = false) Integer max, @RequestParam(name = "p", defaultValue = "1") int pageIndex) {
+        System.out.println(pageIndex);
+        if (pageIndex < 1) {
+            pageIndex = 1;
         }
-        return productDto;
+
+        return productService.findWithParams(min, max, pageIndex).map(ProductDto::new);
     }
 
 
@@ -39,15 +39,9 @@ public class ProductController {
     }
 
     @GetMapping("products/delete/{id}")
-    public void  deleteById(@PathVariable Long id) {
+    public void deleteById(@PathVariable Long id) {
         productService.deleteById(id);
     }
 
-
-   /* @GetMapping("/products/price")
-    public List<Product> findByPrice(@RequestParam(name = "min") int minPrice,
-                                     @RequestParam(name = "max") int maxPrice) {
-        return productService.findPriceBetween(minPrice, maxPrice);
-    } */
 
 }
