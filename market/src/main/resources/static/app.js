@@ -14,7 +14,7 @@ angular.module('market-front', []).controller('appController', function ($scope,
                 if (response.data.numberOfElements < 1){
                     console.log()
                     $scope.loadProducts(response.data.totalPages)
-                    totalPgs = response.data.totalPages;
+     
                 } else {
                     console.log(response);
                     $scope.productsPage = response.data;
