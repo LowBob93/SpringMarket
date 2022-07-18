@@ -17,8 +17,8 @@ public class ProductController {
 
 
     @GetMapping("/products")
-    public List<ProductDto> findAll(@RequestParam(required = false)int min,
-                                    @RequestParam(required = false)int max) {
+    public List<ProductDto> findAll(@RequestParam(required = false)Integer min,
+                                    @RequestParam(required = false)Integer max) {
         List<Product> products =productService.findWithParams(min,max);
         List<ProductDto> productDto = new ArrayList<>();
         for (Product p: products) {

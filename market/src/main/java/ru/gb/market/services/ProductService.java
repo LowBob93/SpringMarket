@@ -29,7 +29,7 @@ public class ProductService {
     }
 
     public List<Product> findByTitle(String title){
-        return productRepository.findByTittle(title);
+        return productRepository.findByTitle(title);
     }
     public void deleteById(Long id) {
         productRepository.deleteById(id);
